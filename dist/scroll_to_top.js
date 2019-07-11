@@ -1,9 +1,9 @@
 /*!
- * @file scroll_to_top.js
+ *   scroll_to_top.js
  * See {@link https://github.com/dettalant/scroll_to_top}
  *
  * @author dettalant
- * @version v0.1.0
+ * @version v0.1.1
  * @license MIT License
  */
 (function () {
@@ -28,12 +28,14 @@
   var SCROLL_BUTTON_CLASSNAME = "scroll_to_top";
   var SCROLL_BUTTON_ID = "scrollToTop";
   var DEVICE_CLICK_EVENT_TYPE = (window.ontouchend === null) ? "touchend" : "click";
-  var addScrollToTopButton = function () {
+  var appendScrollToTopButton = function () {
       var buttonEl = document.createElement("button");
       buttonEl.type = "button";
       buttonEl.className = SCROLL_BUTTON_CLASSNAME;
       buttonEl.id = SCROLL_BUTTON_ID;
-      buttonEl.textContent = "トップへ戻る（仮）";
+      //buttonEl.textContent = "トップへ戻る（仮）";
+      var svgIcon = createSvgIcon();
+      buttonEl.appendChild(svgIcon);
       buttonEl.addEventListener(DEVICE_CLICK_EVENT_TYPE, function () { return scrollToTop(); });
       document.body.appendChild(buttonEl);
   };
@@ -69,6 +71,29 @@
   var interpolation = function (x0, x1, t) {
       return x0 * (1 - t) + x1 * t;
   };
-  addScrollToTopButton();
+  /**
+   * ページトップへ戻るアイコンとなるSVG要素を生成して返す
+   * icon material: material.io baseline-arrow_upward
+   * @return 生成したSVG要素
+   */
+  var createSvgIcon = function () {
+      // XML namespace
+      var NAMESPACE = "http://www.w3.org/2000/svg";
+      // create svg element
+      var svgEl = document.createElementNS(NAMESPACE, "svg");
+      svgEl.setAttribute("viewBox", "0 0 24 24");
+      svgEl.setAttribute("class", "svg_icon icon_arrow_up");
+      // create svg title element
+      var titleEl = document.createElementNS(NAMESPACE, "title");
+      titleEl.textContent = "ページトップへ戻る";
+      svgEl.appendChild(titleEl);
+      // create svg path element
+      var pathEl = document.createElementNS(NAMESPACE, "path");
+      pathEl.setAttribute("class", "svg_main_color");
+      pathEl.setAttribute("d", "M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z");
+      svgEl.appendChild(pathEl);
+      return svgEl;
+  };
+  appendScrollToTopButton();
 
 }());
