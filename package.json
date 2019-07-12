@@ -1,6 +1,6 @@
 {
   "name": "scroll_to_top",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "main": "scroll_to_top.js",
   "license": "MIT",
   "private": true,

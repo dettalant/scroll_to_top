@@ -9,7 +9,6 @@ const appendScrollToTopButton = () => {
   buttonEl.type = "button";
   buttonEl.className = SCROLL_BUTTON_CLASSNAME;
   buttonEl.id = SCROLL_BUTTON_ID;
-  //buttonEl.textContent = "トップへ戻る（仮）";
 
   const svgIcon = createSvgIcon();
   buttonEl.appendChild(svgIcon);
@@ -69,6 +68,7 @@ const createSvgIcon = (): SVGElement => {
   const svgEl = document.createElementNS(NAMESPACE,"svg");
   svgEl.setAttribute("viewBox", "0 0 24 24");
   svgEl.setAttribute("class", "svg_icon icon_arrow_up");
+  svgEl.setAttribute("role", "img");
 
   // create svg title element
   const titleEl = document.createElementNS(NAMESPACE,"title");
