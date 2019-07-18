@@ -3,7 +3,7 @@
  * See {@link https://github.com/dettalant/scroll_to_top}
  *
  * @author dettalant
- * @version v0.1.2
+ * @version v0.1.3
  * @license MIT License
  */
 (function () {
@@ -27,12 +27,14 @@
 
   var SCROLL_BUTTON_CLASSNAME = "scroll_to_top";
   var SCROLL_BUTTON_ID = "scrollToTop";
+  var SCROLL_BUTTON_TITLE = "ページトップへ戻る";
   var DEVICE_CLICK_EVENT_TYPE = (window.ontouchend === null) ? "touchend" : "click";
   var appendScrollToTopButton = function () {
       var buttonEl = document.createElement("button");
       buttonEl.type = "button";
       buttonEl.className = SCROLL_BUTTON_CLASSNAME;
       buttonEl.id = SCROLL_BUTTON_ID;
+      buttonEl.title = SCROLL_BUTTON_TITLE;
       var svgIcon = createSvgIcon();
       buttonEl.appendChild(svgIcon);
       buttonEl.addEventListener(DEVICE_CLICK_EVENT_TYPE, function () { return scrollToTop(); });
@@ -85,7 +87,7 @@
       svgEl.setAttribute("role", "img");
       // create svg title element
       var titleEl = document.createElementNS(NAMESPACE, "title");
-      titleEl.textContent = "ページトップへ戻る";
+      titleEl.textContent = SCROLL_BUTTON_TITLE;
       svgEl.appendChild(titleEl);
       // create svg path element
       var pathEl = document.createElementNS(NAMESPACE, "path");

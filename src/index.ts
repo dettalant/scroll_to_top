@@ -2,6 +2,7 @@ import { easeCubicOut } from "./ease";
 
 const SCROLL_BUTTON_CLASSNAME = "scroll_to_top";
 const SCROLL_BUTTON_ID = "scrollToTop";
+const SCROLL_BUTTON_TITLE = "ページトップへ戻る";
 const DEVICE_CLICK_EVENT_TYPE = (window.ontouchend === null) ? "touchend" : "click";
 
 const appendScrollToTopButton = () => {
@@ -9,6 +10,7 @@ const appendScrollToTopButton = () => {
   buttonEl.type = "button";
   buttonEl.className = SCROLL_BUTTON_CLASSNAME;
   buttonEl.id = SCROLL_BUTTON_ID;
+  buttonEl.title = SCROLL_BUTTON_TITLE;
 
   const svgIcon = createSvgIcon();
   buttonEl.appendChild(svgIcon);
@@ -72,7 +74,7 @@ const createSvgIcon = (): SVGElement => {
 
   // create svg title element
   const titleEl = document.createElementNS(NAMESPACE,"title");
-  titleEl.textContent = "ページトップへ戻る";
+  titleEl.textContent = SCROLL_BUTTON_TITLE;
   svgEl.appendChild(titleEl);
 
   // create svg path element
