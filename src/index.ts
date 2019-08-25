@@ -13,7 +13,14 @@ const interpolation = (x0: number, x1: number, t: number): number => {
 
 export const scrollTo = (moveToPos: number, durationTime?: number) => {
   const targetPos = (moveToPos) ? moveToPos : 0;
-  const pageCurrentY = window.pageYOffset;
+  const scrollY = window.pageYOffset;
+
+  if (Math.floor(targetPos) === Math.floor(scrollY)) {
+    // スクロールする必要がない場合は
+    // 処理を即終了させる
+    return;
+  }
+
   // アニメーション時間をミリ秒指定
   const duration = (durationTime) ? durationTime : 500;
   let now = 0;
@@ -26,7 +33,7 @@ export const scrollTo = (moveToPos: number, durationTime?: number) => {
       progress = 1;
     }
 
-    const tmpY = interpolation(pageCurrentY, targetPos, easeCubicOut(progress));
+    const tmpY = interpolation(scrollY, targetPos, easeCubicOut(progress));
 
     // ウィンドウスクロール処理
     window.scroll(0, tmpY);

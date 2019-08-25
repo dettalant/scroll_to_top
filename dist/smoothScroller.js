@@ -3,7 +3,7 @@
  * See {@link https://github.com/dettalant/smoothScroller}
  *
  * @author dettalant
- * @version v0.1.3
+ * @version v0.2.1
  * @license MIT License
  */
 var smoothScroller = (function (exports) {
@@ -37,7 +37,12 @@ var smoothScroller = (function (exports) {
   };
   const scrollTo = (moveToPos, durationTime) => {
       const targetPos = (moveToPos) ? moveToPos : 0;
-      const pageCurrentY = window.pageYOffset;
+      const scrollY = window.pageYOffset;
+      if (Math.floor(targetPos) === Math.floor(scrollY)) {
+          // スクロールする必要がない場合は
+          // 処理を即終了させる
+          return;
+      }
       // アニメーション時間をミリ秒指定
       const duration = (durationTime) ? durationTime : 500;
       let now = 0;
@@ -48,7 +53,7 @@ var smoothScroller = (function (exports) {
           if (progress > 1) {
               progress = 1;
           }
-          const tmpY = interpolation(pageCurrentY, targetPos, easeCubicOut(progress));
+          const tmpY = interpolation(scrollY, targetPos, easeCubicOut(progress));
           // ウィンドウスクロール処理
           window.scroll(0, tmpY);
           if (progress < 1) {
