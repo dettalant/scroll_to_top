@@ -1,42 +1,33 @@
 import typescript from "rollup-plugin-typescript2";
-import buble from "rollup-plugin-buble";
-import { uglify } from "rollup-plugin-uglify";
-
-const scriptArgs = {
-  name: process.env.npm_package_name,
-  version: process.env.npm_package_version,
-  license: process.env.npm_package_license,
-  repoUrl: "https://github.com/dettalant/scroll_to_top",
-}
+import { terser } from "rollup-plugin-terser";
+import pkg from "./package.json";
 
 const bannerComment = `/*!
- *   ${scriptArgs.name}.js
- * See {@link ${scriptArgs.repoUrl}}
+ *   ${pkg.name}.js
+ * See {@link https://github.com/dettalant/${pkg.name}}
  *
  * @author dettalant
- * @version v${scriptArgs.version}
- * @license ${scriptArgs.license} License
+ * @version v${pkg.version}
+ * @license ${pkg.license} License
  */`;
 
 const plugins = [
-  typescript(),
-  buble(),
+  typescript({
+    useTsconfigDeclarationDir: true
+  }),
 ];
 
-
-let fileName = "./dist/" + scriptArgs.name;
-
+let fileName = "./dist/" + pkg.name;
 if (process.env.NODE_ENV === "production") {
   // for production build
   fileName += ".min";
-
-  const uglifyArgs = {
+  const terserOptions = {
     output: {
       comments: "some"
     }
-  };
+  }
 
-  plugins.push(uglify(uglifyArgs));
+  plugins.push(terser(terserOptions));
 }
 
 export default {
@@ -44,7 +35,7 @@ export default {
   output: {
     file: fileName + ".js",
     format: "iife",
-    name: scriptArgs.name,
+    name: pkg.name,
     banner: bannerComment,
   },
   plugins
